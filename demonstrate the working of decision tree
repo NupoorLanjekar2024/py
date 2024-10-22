@@ -1,0 +1,36 @@
+def decision_tree(knowledge_base):
+    for question, answers in knowledge_base.items():
+        answer = input(f"{question} (Yes/No): ").strip().capitalize()
+        
+        if answer in answers:
+            if isinstance(answers[answer], dict):
+                decision_tree(answers[answer])
+            else:
+                print(f"Advice: {answers[answer]}")
+                return
+        else:
+            print("Invalid input. Please answer with 'Yes' or 'No'.")
+            return
+
+# Knowledge base
+K_Base = {
+    "Is the computer powering on?": {
+        "Yes": {
+            "Is there a beeping sound?": {
+                "Yes": "Check the RAM and CPU",
+                "No": {
+                    "Is the display showing any output?": {
+                        "Yes": "Check the display connections and settings",
+                        "No": "Check the power supply and motherboard"
+                    }
+                }
+            }
+        },
+        "No": "Check the power supply and cables"
+    }
+}
+
+# Start the decision tree
+if __name__ == "__main__":
+    print("Computer Troubleshooting Decision Tree")
+    decision_tree(K_Base)
